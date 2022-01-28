@@ -1,4 +1,5 @@
 // es6中new Promise 可以直接使用
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 function ajaxFun(url,method,data){
     return new Promise((resolve,reject)=>{
