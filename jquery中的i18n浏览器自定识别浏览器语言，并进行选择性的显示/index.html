@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title data-localize="common.title"></title>
+    <!-- 由于$.i18n是基于jQuery的所以要先引入jQuery -->
+    <script src="./js/jquery-1.7.1.min.js"></script>
+    <script src="./js/jquery.i18n.properties-1.0.9.js"></script>
+    <script src="./js/index.js"></script>
+</head>
+<body>
+	<!-- 所有要进行国际化的文件必须使用自定的data-localize属性,
+		其属性值必须能够在语言文件(后缀名是properties的语言文件)中能够找到对应的属性key和值。
+	-->
+    <div data-localize="common.text"></div>
+    <div data-localize="common.title"></div>
+    <button data-localize="common.btn"></button>
+</body>
+</html>

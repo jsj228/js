@@ -1,0 +1,41 @@
+网址：http://www.cnblogs.com/ldlchina/p/4265651.html
+
+由于$.i18n是基于jQuery的所以要先引入jQuery
+<script src="./js/jquery-1.7.1.min.js"></script>
+再引入：
+<script src="./js/jquery.i18n.properties-1.0.9.js"></script>
+和自定义的js文件 
+<script src="./js/index.js"></script>
+
+index.js文件
+	封装一个loadProperties函数,并等到页面加载完成后调用loadProperties函数
+
+	在loadProperties函数中：
+		使用$.i18n.properties({})方法加载语言文件（后缀名是properties的语言文件）	
+		工作的原理：就是浏览器先找到匹配自己需要的语言文件，如果找不到再加载默认的main.properties文件。
+
+		形式如下：
+		$.i18n.properties({
+			name:resourceFileName, //资源文件的名称
+        	path:path,     //资源文件所在目录的路径
+        	mode:'map',    //加载模式：“map”表示以 Map 的方式使用资源文件中的 Key，默认值是“vars”。
+        	language:navigator.language,//获取当前浏览器的使用的语言类型,并设定给language
+        	callback: function() {   //以上语言文件加载成功后的一些操作
+        		$("[data-localize]").each(function() { //each循环带有data-localize属性的DOM元素
+	                var els = $(this),  //每个带有data-localize属性的DOM元素
+	                localizedValue =$.i18n.map[els.data("localize")]; //使用$.i18n.map[key] 读取资源文件中key对应的值
+	                console.log(els.data()); //获取全部带有data-localize属性的DOM元素
+	                console.log(els.data("localize")); //获取DOM元素中全部的data-localize属性的值
+	               
+	                // 设置html元素属性
+	                if (els.is("input[type=text]") || els.is("input[type=password]") || els.is("input[type=email]")) { els.attr("placeholder", localizedValue); }
+	                else if (els.is("input[type=button]") || els.is("input[type=submit]")) {els.attr("value", localizedValue);}
+	                else if (els.is("img")) {els.attr("alt", localizedValue);}
+	                else if (els.is("a")) {els.attr("title", localizedValue);}
+	                else {els.text(localizedValue);}
+	            });
+        	},   
+		})	
+
+
+
