@@ -17,7 +17,31 @@
       "function" //  function f() {}; typeof f
       "object"    //  typeof {}; typeof [];typeof new Date(); typeof null; typeof window  
       "undefined" // typeof undefined; typeof 未定义变量
-      "symbol"  // typeof Symbol();
+      "symbol"  // typeof Symbol();      
+  3.instanceof 的原理是检查右边构造函数的prototype属性是否在左边实例对象的原型链上。
+    instanceof(a, B) {// a代表实例对象；b代表构造函数  
+      a = a.__proto__;
+        B = B.prototype;
+        while(true) {
+          if (a === null) {// 原型链顶层
+              return false;
+          }
+          if(a === B) { return true; }
+          a = a.__proto__;
+        }
+      }
+      //使用：
+      class IsStr{
+        static [Symbol.hasInstance](x) {
+          return typeof x === 'string';
+        }
+      }
+      console.log('' instanceof IsStr); //true
+      例如：
+      ([2]) instanceof Array  -> true
+      (new Date()) instanceof Date -> true
+      (function(){}) instanceof Function  -> true
+      ({}) instanceof Object  -> true
 	<script>
 		//es5正常的函数
 		function is(obj, target) {
