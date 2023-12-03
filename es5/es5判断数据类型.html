@@ -4,6 +4,20 @@
 	<meta charset="UTF-8">
 </head>
 <body>
+	1.通用的方法:Object.prototype.toString.call(obj).slice(8, -1)
+	2.typeof 缺点： 不能区分对象 ，数组，时间对象,null
+      typeof { } === 'object'
+      typeof null === 'object'
+      typeof [122] === 'object'
+      typeof new Date() === 'object'
+		最终能区分的7种
+      "number" //   typeof 123 ; typeof NaN
+      "string"    //   typeof "123"
+      "boolean" //  typeof  true
+      "function" //  function f() {}; typeof f
+      "object"    //  typeof {}; typeof [];typeof new Date(); typeof null; typeof window  
+      "undefined" // typeof undefined; typeof 未定义变量
+      "symbol"  // typeof Symbol();
 	<script>
 		//es5正常的函数
 		function is(obj, target) {
