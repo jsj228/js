@@ -1,0 +1,2 @@
+二维数组扁平化处理
+let arr= [ …new Set([].concat(…targetArr)) ]
