@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    /*内联样式  */
+
+  </style>
+  <link rel="stylesheet" href="my.css">
+</head>
+<body>
+    <button  id="btn1">按钮1</button>
+    <button id="btn2">按钮2</button>
+    <script>
+      // 防抖方法: 使用闭包，操作同一个timer：只有最后一次操作生效
+      // 触发时，创建定时器，当发现定时器存在就清除当前定时器，创建新的定时器
+      //首次触发的时候  会创建一个setTimeout去等  此时如果再次触发 将timer清除
+      function debounce(fn, delay) {
+        var timer;
+        return function () {
+          if (timer) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(function () {
+            fn();
+          }, delay);
+        };
+      }
+      document.querySelectorAll("button")[0].onclick = debounce(function () {
+        console.log(1);
+      }, 2000);
+
+      //  时间戳实现    节流函数：
+      function throttle(fn, delay) {
+        var previous = 0;
+        // 使用闭包返回一个函数并且用到闭包函数外面的变量previous
+        return function () {
+          var now = new Date(); //拿到当前的时间
+          if (now - previous > delay) {
+            // 每次触发事件的时候，都会拿到一个当前的时间
+            //当前时间-调用函数最开始的时间  如果超过固定间隔时间
+            fn(); //执行处理事件
+            previous = now; //将当前触发事件的时间 赋值  成 当前事件首次触发的时间
+          }
+        };
+      }
+      document.querySelectorAll("button")[1].onclick = throttle(function () {
+        console.log(2);
+      }, 2000);
+    </script>
+</body>
+</html>
