@@ -1,0 +1,31 @@
+Promise
+简介
+promise目的：异步编程解决回调地狱，让程序开发者编写的异步代码具有更好的可读性。
+promise规范规定了一种异步编程解决方案的API。规范规定了promise对象的状态和then方法。
+promise是这种异步编程的解决方案的具体实现。
+状态特性用来让使用promise的用户可以及时通知promise任务执行结果。
+then特性让使用promise的用户可以控制执行完一个任务后执行下一个任务。
+（使用回调进行异步编程的话，都是用户手动控制的，使用promise的话，只需要告诉promise：“我要执行什么任务”、“我执行的任务结束了”、“然后我要做什么”）
+
+promise对象  
+new Promise对象时候传入函数，函数立即执行，函数接收resolve、reject参数，调用resolve或reject时候会改变promise状态。状态改变后不会再变化。
+promise状态： pending、fullfilled、rejected
+未调用resolve或者reject时候处于pending状态，调用resolve后处于fullfilled状态，调用reject后处于rejected状态。
+如果在pending状态时候，执行任务抛出错误，则变成reject状态。
+    const p = new Promise((resolve,rejected)=>{
+      console.log('1') // 会率先执行，
+      <!-- throw new Error('test-error'); --> // 抛出异常后，走。then的第二个回调函数
+      resolve('3');    // 调用resolve后，走.then的第一个回调函数
+      console.log('2') // 会率先执行，
+    })
+    p.then(
+      data => console.log('resolve', data),
+      data => console.log('reject', data)
+    )
+    输出 ：
+      // 1   
+      //2 
+      //resolve 3
+
+
+
