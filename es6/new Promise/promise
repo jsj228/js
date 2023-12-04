@@ -1,4 +1,4 @@
-Promise
+Promise -----> https://blog.csdn.net/Q_QQ_QQ_Q/article/details/130843936
 简介
 promise目的：异步编程解决回调地狱，让程序开发者编写的异步代码具有更好的可读性。
 promise规范规定了一种异步编程解决方案的API。规范规定了promise对象的状态和then方法。
@@ -12,20 +12,33 @@ new Promise对象时候传入函数，函数立即执行，函数接收resolve�
 promise状态： pending、fullfilled、rejected
 未调用resolve或者reject时候处于pending状态，调用resolve后处于fullfilled状态，调用reject后处于rejected状态。
 如果在pending状态时候，执行任务抛出错误，则变成reject状态。
-    const p = new Promise((resolve,rejected)=>{
-      console.log('1') // 会率先执行，
-      <!-- throw new Error('test-error'); --> // 抛出异常后，走。then的第二个回调函数
-      resolve('3');    // 调用resolve后，走.then的第一个回调函数
-      console.log('2') // 会率先执行，
-    })
-    p.then(
-      data => console.log('resolve', data),
-      data => console.log('reject', data)
-    )
-    输出 ：
-      // 1   
-      //2 
-      //resolve 3
 
+then方法接受两个参数，onFulfilled（状态变为fullfilled的回调）和onRejected（状态变为rejected的回调）。
+返回一个新的promise对象，返回的promise对象的状态与then的参数（onFulfilled、onRejected）和onFulfilled、onRejected方法中返回的值有关。
+  const p = new Promise((resolve,rejected)=>{
+    console.log('1') // 会率先执行，
+    <!-- throw new Error('test-error'); --> // 抛出异常后，走。then的第二个回调函数
+    resolve('3');    // 调用resolve后，走.then的第一个回调函数
+    console.log('2') // 会率先执行，
+  })
+  p.then(
+    data => console.log('resolve', data), //resolve 3
+    err => console.log('reject', err)   //reject  test-error
+  )
+  输出 ：
+    // 1   
+    //2 
+    //resolve 3
+  或者 resolve 走.then回调，rejected走.cath回调
+  const p = new Promise((resolve,rejected)=>{
+    <!--rejected('2'); --> // 抛出异常后，走.cath回调函数
+    resolve('1');    // 调用resolve后，走.then回调函数
+  })
+  p.then(
+    data => console.log('resolve', data), //resolve 3
+  )
+  p.catch(
+    err => console.log('reject', err)   //reject  2
+  )
 
 
